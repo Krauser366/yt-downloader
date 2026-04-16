@@ -9,9 +9,13 @@ app.use(cors({
 }));
 
 app.get('/download', (req, res) => {
-    const url = req.query.url;
-    // yt-dlp envía los datos binarios del video
-    const ytDlp = spawn('yt-dlp', ['-f', 'best', '--output', '-', url]);
+const path = require('path');
+const ytDlpPath = path.join(__dirname, 'bin', 'yt-dlp');
+
+const ytDlp = spawn(ytDlpPath, [
+    '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+    '--output', '-', 
+    url
 
     res.setHeader('Content-Type', 'video/mp4');
     res.setHeader('Content-Disposition', 'attachment; filename="video.mp4"');
