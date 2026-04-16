@@ -3,7 +3,10 @@ const { spawn } = require('child_process');
 const cors = require('cors'); // Instala con: npm install cors
 const app = express();
 
-app.use(cors()); // Permite peticiones desde cualquier origen
+app.use(cors({
+    origin: 'https://redkstudios.boxmine.xyz', // Permite explícitamente tu dominio
+    methods: ['GET', 'POST']
+}));
 
 app.get('/download', (req, res) => {
     const url = req.query.url;
